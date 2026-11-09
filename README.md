@@ -494,6 +494,12 @@ Limitações aceitas: sem MFA, sem envio de e-mail (redefinição só pelo Contr
 anexos (rever quando o histórico do Power Apps for importado), sem SLA. Backup: exportar periodicamente pelo
 painel do Neon (o plano grátis guarda histórico curto).
 
+Publicado em 2026-11-09: **https://simsuperus.streamlit.app** (repositório privado `ControleOeS/SIM`, banco Neon
+`morning-river-30779348`). Os dados do SIM local (usuários, senhas, acessos, CCs, BMs, auditoria e anexos) foram
+copiados com os mesmos IDs por `scripts/migrar_para_hospedagem.py`, que lê o destino de `.env.hospedagem`
+(fora do Git), exige destino vazio e grava tudo numa única transação. A partir daí, o banco oficial é o Neon:
+o SQLite local virou só cópia histórica.
+
 ## 9.5 Importação do histórico do SIM antigo (SUPERUS)
 
 As listas do SharePoint exportadas em Excel (`Base <lista> Lists.xlsx`) entram pelo comando:
