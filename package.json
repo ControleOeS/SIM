@@ -1,0 +1,18 @@
+{
+  "name": "sim-asap-web",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Reconstrução web do app SIM ASAP (Power Apps) — fase 1, dados fictícios",
+  "type": "module",
+  "scripts": {
+    "start": "npx --yes http-server -p 5500 -c-1 .",
+    "test": "node --test \"tests/unit/*.test.js\"",
+    "test:e2e": "node tests/e2e/e2e.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "devDependencies": {
+    "playwright": "1.56.0"
+  }
+}

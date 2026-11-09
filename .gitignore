@@ -1,0 +1,42 @@
+node_modules/
+test-results/
+*.log
+.env
+# Exportações reais das listas nunca entram no repositório
+dados-reais/
+*.xlsx
+
+# SIM (Streamlit): banco local, anexos, logs e backups ficam fora do Git
+data/
+backups/
+*.db
+*.db-journal
+*.sqlite
+*.sqlite3
+
+# Python
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+# Configurações locais e segredos
+.streamlit/secrets.toml
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+*.crt
+*.cer
+*.cert
+
+# Referências originais e dados internos
+referencias_power_apps/
+
+# Arquivos temporários
+__pycache__/
+.pytest_cache/
+.vscode/
+.DS_Store
+Thumbs.db

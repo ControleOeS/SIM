@@ -1,0 +1,47 @@
+SIM - Sistema Integrado de Medicoes (O&S Gestao)
+Como rodar este pacote em outro computador Windows
+==================================================
+
+O pacote traz o SIM exatamente como estava no computador de origem: codigo, banco de dados
+(usuarios, senhas, centros de custo, BMs, historico importado e valores previstos), anexos e
+configuracao.
+
+1. Pre-requisito (uma vez)
+   - Instale o Python 3.14 em https://www.python.org/downloads/
+     Na primeira tela do instalador, marque "Add python.exe to PATH".
+   - O computador precisa de internet durante a instalacao (para baixar as bibliotecas).
+
+2. Copiar e descompactar
+   - Descompacte o .zip numa pasta local, por exemplo C:\SIM
+     (evite pastas sincronizadas com OneDrive/SharePoint, que podem corromper o banco).
+   - Use um caminho curto (ate uns 50 caracteres): caminhos longos estouram o limite do Windows
+     na instalacao das bibliotecas (erro WinError 206).
+
+3. Instalar (uma vez)
+   - De dois cliques em INSTALAR.bat e aguarde "Instalacao concluida" (alguns minutos).
+
+4. Usar
+   - De dois cliques em INICIAR_SIM.bat. O navegador abre em http://127.0.0.1:8501
+   - Mantenha a janela preta aberta enquanto usar o SIM; feche-a para encerrar.
+   - Entre com o mesmo e-mail e senha do computador de origem.
+
+5. Editar no VS Code
+   - Instale o VS Code (https://code.visualstudio.com/) e rode o INSTALAR.bat antes.
+   - No VS Code: Arquivo > Abrir Pasta... e escolha a pasta SIM (a que tem o app.py).
+   - Aceite instalar as extensoes recomendadas (Python e Pylance) quando o VS Code oferecer.
+   - O VS Code ja usa o Python do SIM (.venv). Se perguntar, escolha ".venv".
+   - F5 (Executar e Depurar > "SIM (Streamlit)") abre o SIM com o depurador.
+   - Aba Testes: roda os testes automaticos. Terminal > Executar Tarefa: iniciar, testar,
+     backup e atualizar o banco.
+   - Com o SIM aberto, as alteracoes no codigo aparecem ao atualizar a pagina (F5 no navegador).
+   - Antes de mudancas grandes, leia docs\GUIA_DESENVOLVIMENTO_E_CONTINUIDADE_IA.md
+
+Importante
+- Use o SIM em um computador por vez. Depois de copiar, o que for lancado em um computador
+  nao aparece no outro (cada copia tem o proprio banco em data\sim.db).
+- O arquivo .env contem a senha da conta de e-mail do SIM. Transfira o pacote por meio seguro
+  (pendrive ou pasta restrita), nao por e-mail, e apague o .zip depois de instalar.
+- Backup: .venv\Scripts\python.exe scripts\backup.py  (gera a pasta backups\).
+- A pasta dados-legado\ guarda as planilhas do SIM antigo, usadas para carregar o historico
+  no SIM online (README, secao 9.5). Nao e necessaria para o uso diario.
+- Detalhes tecnicos: README.md e docs\GUIA_DESENVOLVIMENTO_E_CONTINUIDADE_IA.md

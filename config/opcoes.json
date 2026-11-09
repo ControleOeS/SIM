@@ -1,0 +1,55 @@
+{
+  "_leia_me": "Opções das colunas de escolha. As listas SharePoint carregam esses valores em tempo de execução e eles NÃO estão nos pacotes .msapp. 'situacao' = confirmado (visto nas fórmulas) ou provisorio (precisa ser validado com as exportações das listas). Edite este arquivo e reinicie o SIM para alterar as opções; registros já gravados com valores fora da lista continuam visíveis e editáveis.",
+
+  "asap.mes_referencia": {
+    "situacao": "confirmado",
+    "origem": "SIM ASAP ADM, filtro ComboBox1 do Faturamento: lista fixa com os 12 meses.",
+    "valores": ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"]
+  },
+  "asap.ano": {
+    "situacao": "provisorio",
+    "origem": "Choices(Ano) dinâmico; valores não estão no pacote.",
+    "valores": ["2024", "2025", "2026", "2027"]
+  },
+  "asap.status": {
+    "situacao": "provisorio",
+    "origem": "Choices(Status) dinâmico. Confirmados: 'BM Aprovado pelo Cliente' (Form1.OnSuccess do SIM ASAP) e 'Faturado Total' (combo de Status do SIM ASAP ADM). 'BM em Análise do Cliente' vem do SIM SUPERUS e ainda precisa ser confirmado na lista da ASAP.",
+    "valores": ["BM em Análise do Cliente", "BM Aprovado pelo Cliente", "Faturado Total"]
+  },
+
+  "superus.mes_referencia": {
+    "situacao": "provisorio",
+    "origem": "Choices('Mês de Referência') dinâmico nas listas BMs e BM Semanal. Usa os mesmos nomes de mês confirmados na ASAP, a confirmar.",
+    "valores": ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"]
+  },
+  "superus.ano": {
+    "situacao": "provisorio",
+    "origem": "Choices(Ano) dinâmico. Só o padrão da coluna ('2026') está confirmado.",
+    "valores": ["2024", "2025", "2026", "2027"]
+  },
+  "superus.tipo": {
+    "situacao": "confirmado",
+    "origem": "Coluna Tipo1, exibida como 'BM ou PO?'. Valores confirmados na exportação da lista BMs (2026-10-27).",
+    "valores": ["BM", "PO", "SPOT", "Indenização"]
+  },
+  "superus.status_engenharia": {
+    "situacao": "confirmado",
+    "origem": "SIM SUPERUS, BM Mensal: Filter(Choices([@BMs].Status), Value = \"BM em Análise do Cliente\" || Value = \"BM Aprovado pelo Cliente\").",
+    "valores": ["BM em Análise do Cliente", "BM Aprovado pelo Cliente"]
+  },
+  "superus.status": {
+    "situacao": "confirmado",
+    "origem": "SIM SUPERUS ADM, Faturamento: Choices([@BMs].Status) completo. Valores confirmados nas exportações das listas BMs e Historico BMs (2026-10-27).",
+    "valores": ["BM em Análise do Cliente", "BM Aprovado pelo Cliente", "FRS Aprovada", "FRS Parcial", "FRS Total", "Faturado Parcial", "Faturado Total"]
+  },
+  "superus.semana": {
+    "situacao": "confirmado",
+    "origem": "Choices(Semana) da lista BM Semanal; Semana 1 a 5 confirmadas na exportação (2026-10-27).",
+    "valores": ["Semana 1", "Semana 2", "Semana 3", "Semana 4", "Semana 5"]
+  },
+  "superus.encerramento_manual": {
+    "situacao": "provisorio",
+    "origem": "Choices(EncerramentoManual) dinâmico na Lista de Apoio.",
+    "valores": ["Sim", "Não"]
+  }
+}

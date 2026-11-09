@@ -1,0 +1,33 @@
+[server]
+# Sem "address" aqui: o Streamlit Community Cloud define endereço e porta e não inicia com valores fixos.
+# No computador local, inicie com --server.address 127.0.0.1 (README) para não expor o SIM na rede.
+maxUploadSize = 50
+headless = true
+
+[browser]
+gatherUsageStats = false
+
+[client]
+toolbarMode = "minimal"
+
+[theme]
+# Identidade O&S Gestão (cores extraídas do logotipo; ver sim/ui/tema.py)
+base = "light"
+primaryColor = "#00495C"
+backgroundColor = "#FFFFFF"
+secondaryBackgroundColor = "#F4F7F8"
+textColor = "#13262D"
+linkColor = "#00495C"
+borderColor = "#D9E2E5"
+showWidgetBorder = true
+baseRadius = "8px"
+buttonRadius = "8px"
+redColor = "#B42318"
+font = "'Segoe UI', 'Open Sans', system-ui, -apple-system, Roboto, Arial, sans-serif"
+dataframeHeaderBackgroundColor = "#E6EFF1"
+dataframeBorderColor = "#D9E2E5"
+
+[theme.sidebar]
+backgroundColor = "#F4F7F8"
+secondaryBackgroundColor = "#FFFFFF"
+borderColor = "#D9E2E5"

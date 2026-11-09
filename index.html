@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SIM ASAP · Sistema Integrado de Medição</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <script type="module" src="js/main.js"></script>
+</head>
+<body>
+  <div id="demo-banner" class="demo-banner" hidden>
+    Dados de demonstração. Nada aqui está ligado às listas reais e as alterações somem ao recarregar a página.
+  </div>
+  <div id="error-banner" class="error-banner" role="alert" hidden></div>
+
+  <!-- TELA INICIAL -->
+  <section id="screen-home" class="screen home" data-screen="home" hidden>
+    <div class="home__brand">
+      <h1 class="home__wordmark">SIM</h1>
+      <p class="home__subtitle">Sistema Integrado de Medição</p>
+    </div>
+    <nav class="home__actions" aria-label="Menu principal">
+      <button type="button" class="home__action" data-action="ir-bm">
+        <span class="home__action-title">BMs ASAP</span>
+        <span class="home__action-desc">Consultar, lançar e editar boletins de medição</span>
+      </button>
+      <button type="button" class="home__action home__action--secondary" data-action="ir-cadastro">
+        <span class="home__action-title">Cadastro Centro de Custo</span>
+        <span class="home__action-desc">Incluir um novo centro de custo</span>
+      </button>
+    </nav>
+  </section>
+
+  <!-- BM MENSAL -->
+  <section id="screen-bm" class="screen work" data-screen="bm" hidden>
+    <header class="appbar">
+      <div class="appbar__title"><span class="appbar__sim">SIM</span><span class="appbar__page">Mensal</span></div>
+      <p class="appbar__context" id="bm-cc-atual"></p>
+      <button type="button" class="btn btn--ghost-light" data-action="ir-home">Tela Inicial</button>
+    </header>
+
+    <main class="work__body" id="bm-main" hidden>
+      <section class="panel" aria-labelledby="bm-lista-titulo">
+        <div class="panel__head">
+          <h2 id="bm-lista-titulo">Boletins de medição</h2>
+          <p class="panel__meta" id="bm-contagem"></p>
+        </div>
+        <div class="table-wrap">
+          <table class="grid" id="bm-tabela">
+            <thead>
+              <tr>
+                <th scope="col">Centro de Custo</th>
+                <th scope="col">Nome do Arquivo</th>
+                <th scope="col">Mês do BM</th>
+                <th scope="col" class="num">Valor do BM</th>
+                <th scope="col" class="num">Valor Emitido</th>
+                <th scope="col" class="num">Valor Aprovado</th>
+                <th scope="col">Status</th>
+                <th scope="col">Data Criação</th>
+                <th scope="col" class="actions-col"><span class="sr-only">Ações</span></th>
+              </tr>
+            </thead>
+            <tbody id="bm-tbody"></tbody>
+          </table>
+          <p class="empty" id="bm-vazio" hidden>Nenhum BM lançado ainda. Preencha o formulário abaixo para lançar o primeiro.</p>
+        </div>
+      </section>
+
+      <section class="panel panel--form" aria-labelledby="bm-form-titulo">
+        <div class="panel__head">
+          <h2 id="bm-form-titulo">Novo BM</h2>
+          <p class="panel__meta"><span aria-hidden="true">*</span> obrigatório</p>
+        </div>
+        <form id="bm-form" class="form-grid" novalidate>
+          <div class="field field--wide" data-field="centroCustoId">
+            <label for="bm-cc-input">Centro de Custo <span class="req" aria-hidden="true">*</span></label>
+            <div class="combo" id="bm-cc-combo"></div>
+            <p class="field__error" id="err-bm-centroCustoId"></p>
+          </div>
+          <div class="field field--wide" data-field="titulo">
+            <label for="bm-titulo">Nome do Arquivo <span class="req" aria-hidden="true">*</span></label>
+            <input id="bm-titulo" name="titulo" type="text" maxlength="255" autocomplete="off" aria-describedby="err-bm-titulo">
+            <p class="field__error" id="err-bm-titulo"></p>
+          </div>
+          <div class="field" data-field="ano">
+            <label for="bm-ano">Ano <span class="req" aria-hidden="true">*</span></label>
+            <select id="bm-ano" name="ano" aria-describedby="err-bm-ano"></select>
+            <p class="field__error" id="err-bm-ano"></p>
+          </div>
+          <div class="field" data-field="mesReferencia">
+            <label for="bm-mes">Mês de Referência <span class="req" aria-hidden="true">*</span></label>
+            <select id="bm-mes" name="mesReferencia" aria-describedby="err-bm-mesReferencia"></select>
+            <p class="field__error" id="err-bm-mesReferencia"></p>
+          </div>
+          <div class="field field--wide" data-field="status">
+            <label for="bm-status">Status <span class="req" aria-hidden="true">*</span></label>
+            <select id="bm-status" name="status" aria-describedby="err-bm-status"></select>
+            <p class="field__error" id="err-bm-status"></p>
+          </div>
+          <div class="field" data-field="valorBM">
+            <label for="bm-valor">Valor BM <span class="req" aria-hidden="true">*</span></label>
+            <input id="bm-valor" name="valorBM" type="text" inputmode="decimal" autocomplete="off" class="num" aria-describedby="err-bm-valorBM">
+            <p class="field__error" id="err-bm-valorBM"></p>
+          </div>
+          <div class="field" data-field="valorAprovado">
+            <label for="bm-aprovado">Valor Aprovado <span class="req" aria-hidden="true">*</span></label>
+            <input id="bm-aprovado" name="valorAprovado" type="text" inputmode="decimal" autocomplete="off" class="num" aria-describedby="hint-bm-aprovado err-bm-valorAprovado">
+            <p class="field__hint" id="hint-bm-aprovado">Caso ainda não tenha sido aprovado, preencha com 0.</p>
+            <p class="field__error" id="err-bm-valorAprovado"></p>
+          </div>
+          <div class="field" data-field="glosa">
+            <label for="bm-glosa">Glosa</label>
+            <input id="bm-glosa" name="glosa" type="text" inputmode="decimal" autocomplete="off" class="num" aria-describedby="err-bm-glosa">
+            <p class="field__error" id="err-bm-glosa"></p>
+          </div>
+          <div class="field" data-field="anexos">
+            <span class="label" id="bm-anexos-label">Anexos <span class="req" aria-hidden="true">*</span></span>
+            <ul class="attachments" id="bm-anexos-lista" aria-labelledby="bm-anexos-label"></ul>
+            <label class="btn btn--outline btn--small file-btn">
+              Adicionar arquivo
+              <input id="bm-anexos-input" type="file" multiple class="sr-only" aria-describedby="err-bm-anexos">
+            </label>
+            <p class="field__error" id="err-bm-anexos"></p>
+          </div>
+          <div class="field field--full" data-field="observacoes">
+            <label for="bm-obs">Observações</label>
+            <textarea id="bm-obs" name="observacoes" rows="3"></textarea>
+          </div>
+          <div class="form-actions">
+            <button type="submit" class="btn btn--primary" id="bm-salvar">Salvar</button>
+            <button type="button" class="btn btn--outline" id="bm-cancelar">Cancelar Edição</button>
+          </div>
+        </form>
+      </section>
+    </main>
+  </section>
+
+  <!-- CADASTRO -->
+  <section id="screen-cadastro" class="screen work" data-screen="cadastro" hidden>
+    <header class="appbar">
+      <div class="appbar__title"><span class="appbar__sim">SIM</span><span class="appbar__page">Cadastro</span></div>
+      <p class="appbar__context">Novo centro de custo</p>
+      <button type="button" class="btn btn--ghost-light" data-action="ir-home">Tela Inicial</button>
+    </header>
+    <main class="work__body work__body--narrow">
+      <section class="panel panel--form" aria-labelledby="cc-form-titulo">
+        <div class="panel__head">
+          <h2 id="cc-form-titulo">Cadastro de centro de custo</h2>
+          <p class="panel__meta"><span aria-hidden="true">*</span> obrigatório</p>
+        </div>
+        <form id="cc-form" class="form-grid form-grid--two" novalidate>
+          <div class="field field--full">
+            <label for="cc-titulo">Centro de Custo <span class="req" aria-hidden="true">*</span></label>
+            <input id="cc-titulo" name="titulo" type="text" maxlength="255" autocomplete="off" aria-describedby="err-cc-titulo">
+            <p class="field__error" id="err-cc-titulo"></p>
+          </div>
+          <div class="field field--full">
+            <label for="cc-cliente">Cliente <span class="req" aria-hidden="true">*</span></label>
+            <input id="cc-cliente" name="cliente" type="text" maxlength="255" autocomplete="off" aria-describedby="err-cc-cliente">
+            <p class="field__error" id="err-cc-cliente"></p>
+          </div>
+          <div class="field">
+            <label for="cc-inicio">Início de Medição <span class="req" aria-hidden="true">*</span></label>
+            <input id="cc-inicio" name="inicioMedicao" type="text" inputmode="decimal" autocomplete="off" class="num" aria-describedby="err-cc-inicioMedicao">
+            <p class="field__error" id="err-cc-inicioMedicao"></p>
+          </div>
+          <div class="field">
+            <label for="cc-fim">Fim de Medição <span class="req" aria-hidden="true">*</span></label>
+            <input id="cc-fim" name="fimMedicao" type="text" inputmode="decimal" autocomplete="off" class="num" aria-describedby="err-cc-fimMedicao">
+            <p class="field__error" id="err-cc-fimMedicao"></p>
+          </div>
+          <div class="field field--full">
+            <label for="cc-email">E-mail <span class="req" aria-hidden="true">*</span></label>
+            <textarea id="cc-email" name="email" rows="2" aria-describedby="err-cc-email"></textarea>
+            <p class="field__error" id="err-cc-email"></p>
+          </div>
+          <div class="field field--full">
+            <label for="cc-periodo">Período: Mensal ou Quinzenal</label>
+            <input id="cc-periodo" name="periodo" type="text" maxlength="255" autocomplete="off" aria-describedby="err-cc-periodo">
+            <p class="field__error" id="err-cc-periodo"></p>
+          </div>
+          <div class="form-actions">
+            <button type="submit" class="btn btn--primary" id="cc-salvar">Salvar</button>
+            <button type="button" class="btn btn--outline" id="cc-cancelar">Cancelar Edição</button>
+          </div>
+        </form>
+      </section>
+    </main>
+  </section>
+
+  <!-- DIÁLOGO: escolha do centro de custo (abre ao entrar em BM Mensal) -->
+  <dialog id="dlg-cc" class="dialog" aria-labelledby="dlg-cc-titulo">
+    <form method="dialog" class="dialog__body" id="dlg-cc-form">
+      <p class="dialog__eyebrow">SIM Mensal</p>
+      <h2 id="dlg-cc-titulo">Escolha seu Centro de Custos</h2>
+      <p class="dialog__text">O centro escolhido vem preenchido nos novos BMs. A lista continua mostrando todos os BMs.</p>
+      <div class="combo combo--open" id="dlg-cc-combo"></div>
+      <p class="field__error" id="err-dlg-cc"></p>
+      <div class="dialog__actions">
+        <button type="button" class="btn btn--outline" data-action="ir-home">Tela Inicial</button>
+        <button type="submit" class="btn btn--primary" id="dlg-cc-ok">OK</button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- DIÁLOGO: confirmação de exclusão -->
+  <dialog id="dlg-excluir" class="dialog dialog--danger" aria-labelledby="dlg-excluir-titulo" aria-describedby="dlg-excluir-texto">
+    <div class="dialog__body">
+      <h2 id="dlg-excluir-titulo">Deseja mesmo excluir essa linha?</h2>
+      <p class="dialog__text" id="dlg-excluir-texto">Sua ação não terá volta!</p>
+      <p class="dialog__subject" id="dlg-excluir-item"></p>
+      <div class="dialog__actions">
+        <button type="button" class="btn btn--outline" id="dlg-excluir-nao">Não</button>
+        <button type="button" class="btn btn--danger" id="dlg-excluir-sim">Sim, excluir</button>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- DIÁLOGO: anexos do BM -->
+  <dialog id="dlg-anexos" class="dialog" aria-labelledby="dlg-anexos-titulo">
+    <div class="dialog__body">
+      <h2 id="dlg-anexos-titulo">Anexos</h2>
+      <ul class="attachments attachments--readonly" id="dlg-anexos-lista"></ul>
+      <p class="dialog__note" id="dlg-anexos-nota"></p>
+      <div class="dialog__actions">
+        <button type="button" class="btn btn--primary" id="dlg-anexos-fechar">Fechar</button>
+      </div>
+    </div>
+  </dialog>
+
+  <div class="toast-region" id="toast-region" aria-live="polite" aria-atomic="true"></div>
+</body>
+</html>
