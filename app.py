@@ -57,9 +57,22 @@ try:
 except EsquemaDesatualizado as exc:
     st.error(str(exc))
     st.stop()
-except Exception:
+except Exception as exc:
     get_logger("app").exception("Falha ao iniciar o SIM")
-    st.error("Não foi possível abrir o banco de dados do SIM. Veja data/logs/sim.log para detalhes.")
+    import os
+    import re
+
+    def _sem_senha(texto: str) -> str:
+        return re.sub(r"(://[^:/@\s]+):[^@\s]+@", r"\1:***@", texto)
+
+    url = os.getenv("DATABASE_URL", "")
+    servidor = url.split("@", 1)[-1].split("/", 1)[0] if "@" in url else "(DATABASE_URL não definido: usando SQLite local)"
+    st.error(
+        "Não foi possível abrir o banco de dados do SIM.\n\n"
+        f"**Servidor configurado:** `{servidor}`\n\n"
+        f"**Erro:** `{type(exc).__name__}: {_sem_senha(str(exc))[:400]}`\n\n"
+        "Na hospedagem, confira DATABASE_URL em Settings → Secrets; no computador local, veja data/logs/sim.log."
+    )
     st.stop()
 
 
